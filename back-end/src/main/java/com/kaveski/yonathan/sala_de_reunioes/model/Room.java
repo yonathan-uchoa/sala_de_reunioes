@@ -4,8 +4,6 @@ package com.kaveski.yonathan.sala_de_reunioes.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,11 +16,11 @@ public class Room {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private LocalDate date;
+    private String date;
     @Column(nullable = true)
-    private LocalDateTime startHour;
+    private String startHour;
     @Column(nullable = true)
-    private LocalDateTime endHour;
+    private String endHour;
 
     @Override
     public String toString(){
