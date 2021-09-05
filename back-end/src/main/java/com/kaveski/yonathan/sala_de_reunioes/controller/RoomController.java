@@ -28,16 +28,19 @@ public class RoomController {
         return roomRepository.findAll();
     }
 
+    @GetMapping("/rooms/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable(value = "id") Long roomId) throws ResourceNotFoundException{
         Room room = roomRepository.findById(roomId).orElseThrow( () ->
                 new ResourceNotFoundException("Room not found! :: "+ roomId)
         );
         return ResponseEntity.ok().body(room);
     }
+
     @PostMapping("/rooms")
     public Room createRoom(@Valid @RequestBody Room room){
         return roomRepository.save(room);
     }
+
     @PutMapping("/rooms/{id}")
     public ResponseEntity<Room> updateRoom(@PathVariable(value = "id")Long roomId,
                                            @Valid @RequestBody Room roomDetails) throws ResourceNotFoundException{
@@ -45,9 +48,12 @@ public class RoomController {
         Room room = roomRepository.findById(roomId).orElseThrow( () ->
                 new ResourceNotFoundException("Room not found! :: "+ roomId)
         );
+        roomDetails.setId(roomId);
+        roomRepository.save(roomDetails);
         return ResponseEntity.ok().body(room);
     }
 
+    @DeleteMapping("/rooms/{id}")
     public Map<String, Boolean> deleteRoom(@PathVariable(value = "id") Long roomId) throws ResourceNotFoundException{
         Room room = roomRepository.findById(roomId).orElseThrow( () ->
                 new ResourceNotFoundException("Room not found! :: "+ roomId)
